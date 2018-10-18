@@ -28,8 +28,9 @@ process.on('SIGINT', function() {
 })
 
 var indexRouter = require('./routes/pages');
-var usersRouter = require('./routes/users');
+// var usersRouter = require('./routes/users');
 var postsRouter = require('./routes/api/posts');
+var usersRouter = require('./routes/api/users');
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/posts', postsRouter);
+app.use('/api/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

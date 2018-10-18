@@ -7,31 +7,22 @@ var router = express.Router();
 // /api/posts
 router.get('/', (req, res, next) => {
 	// List all posts from DB
-	let offset = Number(req.query.offset);
-	let limit = Number(req.query.limit);
-	Post.find({})
-		.skip(offset)
-		.limit(limit)
-		.then((data) => {
-			res.json(data)
-		})
-
-	Post.find({}, (err, data) => {
+	User.find({}, (err, data) => {
 		if (err || !data) {
 			console.log('error')
-			return;
+			return ;
 		}
 		res.json(data)
 	})
 })
 
-router.get('/:postID', (req, res, next) => {
+router.get('/:userID', (req, res, next) => {
 	//Get post where = postID
-	let id = req.params.postID
-	Post.findById(id, (err, data) => {
+	let id = req.params.userID
+	User.findById(id, (err, data) => {
 		if (err || !data) {
 			console.log('error')
-			return;
+			return ;
 		}
 		res.json(data)
 	})
@@ -39,27 +30,28 @@ router.get('/:postID', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
 	//Create new post
-	let post = new Post({
-		title: req.body.title,
-		content: req.body.content,
+	let user = new User({
+		username: req.body.username,
+		email: req.body.email,
+		password: req.body.password,
 	})
 	post.save((err, data) => {
 		 if (err || !data) {
 			console.log('error')
 			res.json({error: err})
-			return;
+			return ;
 		}
 		res.json(data)
 	})
 })
 
-router.put('/:postID', (req, res, next) => {
+router.put('/:userID', (req, res, next) => {
 	//Update exist posts 
-	let id = req.params.postID
+	let id = req.params.userID
 	// Post.findById(id, (err, post) => {
 	// 	if (err || !post) {
 	// 		console.log('error')
-	// 		return;
+	// 		return ;
 	// 	}
 	// 	post.title = req.body.title
 	// 	post.content = req.body.content
@@ -67,30 +59,31 @@ router.put('/:postID', (req, res, next) => {
 	// 		 if (err || !data) {
 	// 			console.log('error')
 	// 			res.json({error: err})
-	// 			return;
+	// 			return ;
 	// 		}
 	// 	res.json(post)
 	// })
 	
 	Post.findByIdAndUpdate(id, {
-		title: req.body.title,
-		content: req.body.content
-	}, (err, post) => {
-		 if (err || !post) {
+		username: req.body.username,
+		email: req.body.email,
+		password: req.body.password
+	}, (err, user) => {
+		 if (err || !user) {
 			console.log('error')
 			res.json({error: err})
-			return;
-		} 
-		res.json(post)
+			return ;
+		}
+		res.json(user)
 	})
 })
 
 
-router.delete('/:postID', (req, res, next) => {
+router.delete('/:userID', (req, res, next) => {
 	//delete exist posts
-	let id = req.params.postID
+	let id = req.params.userID
 	
-	Post.findByIdAndRemove(id, (err, post) => {
+	User.findByIdAndRemove(id, (err, post) => {
 		if (err) {
 			console.log('error ' + err)
 			res.json({error: err})
@@ -98,7 +91,8 @@ router.delete('/:postID', (req, res, next) => {
 		}
 		res.json({error: false}) // success
 	})
+	
 })
 
 
-module.exports = router
+module.exports = router;

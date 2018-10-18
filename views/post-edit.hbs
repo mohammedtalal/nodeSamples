@@ -1,0 +1,9 @@
+<form id="form">
+	<input type="hidden" id="postID" value="{{ post._id }}">
+	<input id="postTitle" type="text" name="title" placeholder="Enter Title ..." value="{{ post.title }}">
+	<textarea id="postContent" name="content" placeholder="Enter Content ...">{{ post.content }}</textarea>
+	<button type="submit"> Submit Edit</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script type="text/javascript" src="/javascripts/post-edit.js"></script>
